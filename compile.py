@@ -19,19 +19,27 @@ page = """<html><head><title>Shuga Sticker Pack</title>
     a {
         color: #1da1f1;
         text-decoration: none;
+        background: transparent;
+        transition: padding 0.25s ease-in-out, background 0.25s ease-in-out;
+        border-radius: 10px;
     }
-    a:hover {
+    .title:hover {
         opacity: 0.5!important;
+    }
+    a:not(.title):hover {
+        background: #222;
+        padding: 10px;
     }
     .stickers {
         text-align: center;
         display: grid;
-        grid-template-columns: 23% 23% 23% 23%;
+        grid-template-columns: 20% 20% 20% 20%;
         grid-gap: 10px
     }
     .stickers > a > img {
         width: 100%;
         height: auto;
+        padding: 0;
     }
     .c {
         opacity: 0.5;
@@ -39,7 +47,7 @@ page = """<html><head><title>Shuga Sticker Pack</title>
         margin: 10px;
     }
 </style></head><body>
-<h1><a href="//buy.dyn.dev/stickerpack">Shuga Sticker Pack</a> API</h1>
+<h1><a class="title" href="//buy.dyn.dev/stickerpack">Shuga Sticker Pack</a> API</h1>
 <p>Contact <code>stickerpack [at] shuga [dot] co</code> for non-personal usage inquiries or higher-quality assets (or vectors).</p>
 <div class="stickers">""" + stickEl + "</div><div class=\"c\">© Shuga and Respective Owners</div></body></html>"
 
