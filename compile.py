@@ -6,7 +6,7 @@ stickers = [f for f in listdir(".") if ".png" in f]
 
 stickEl = ""
 for img in stickers:
-    stickEl += f"<a href=\"/{img}\"><img src=\"{img}\"></a>"
+    stickEl += f"<a title=\"{img}\" href=\"/{img}\"><span>{img}</span><img src=\"{img}\"></a>"
 
 page = """<html><head><title>Shuga Sticker Pack</title>
 <style>
@@ -45,6 +45,11 @@ page = """<html><head><title>Shuga Sticker Pack</title>
         opacity: 0.5;
         text-align: center;
         margin: 10px;
+    }
+    span {
+        font-size: 0;
+        opacity: 0;
+        color: transparent;
     }
 </style></head><body>
 <h1><a class="title" href="//buy.dyn.dev/stickerpack">Shuga Sticker Pack</a> API</h1>
