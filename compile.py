@@ -33,7 +33,7 @@ page = """<html><head><title>Shuga Sticker Pack</title>
     .stickers {
         text-align: center;
         display: grid;
-        grid-template-columns: 20% 20% 20% 20%;
+        grid-template-columns: 22% 22% 22% 22%;
         grid-gap: 10px
     }
     .stickers > a > img {
