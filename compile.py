@@ -12,12 +12,14 @@ stickList = {}
 stickCount = 0
 for img in stickers:
     parseCache = parse.quote(img)
-    if "_3p" not in img:
+    if "_tp" not in img:
         stickEl += f"<a title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
+    else:
+        stickEl += f"<a class=\"tp\" title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
     stickCount += 1
     stickList[img.replace(".png", "")] = parseCache
 
-page = """<html><head><title>Shuga Sticker Pack</title>
+page = """<html><head><title>Shuga Sticker Pack</title><meta charset="utf-8"/>
 <style>
     body {
         width: 35em;
@@ -60,9 +62,33 @@ page = """<html><head><title>Shuga Sticker Pack</title>
         opacity: 0;
         color: transparent;
     }
-</style></head><body>
+    .tp {
+        display: none;
+    }
+    button {
+        text-align: center;
+        background: #222;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        margin: 10px auto;
+        display: block;
+        cursor: pointer;
+    }
+</style><script>
+let thirdParty = false;
+function toggletp() {
+    for (let i = 0; i < document.querySelectorAll(".tp").length;i++) {
+        if (thirdParty) document.querySelectorAll(".tp")[i].style.display = "none";
+        else document.querySelectorAll(".tp")[i].style.display = "inline";
+        thirdParty = thirdParty ? false : true;
+    }
+}</script></head><body>
 <h1><a class="title" href="//buy.dyn.dev/stickerpack">Shuga Sticker Pack</a> API</h1>
 <p>Contact <code>stickerpack [at] shuga [dot] co</code> for non-personal usage inquiries or higher-quality assets (or vectors).</p>
+<button onclick="toggletp()">Toggle Third Party Stickers</button>
 <div class="stickers">""" + stickEl + "</div><div class=\"c\">© Shuga and Respective Owners</div></body></html>"
 
 with open('index.html', 'w') as file:
