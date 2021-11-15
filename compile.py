@@ -2,11 +2,20 @@ print("SSP Homepage Compiler")
 
 from os import listdir
 from os.path import isfile, join
+import json
+from urllib import parse
+
 stickers = [f for f in listdir(".") if ".png" in f]
 
 stickEl = ""
+stickList = {}
+stickCount = 0
 for img in stickers:
-    stickEl += f"<a title=\"{img}\" href=\"/{img}\"><span>{img}</span><img src=\"{img}\"></a>"
+    parseCache = parse.quote(img)
+    if "_3p" not in img:
+        stickEl += f"<a title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
+    stickCount += 1
+    stickList[str(stickCount)] = parseCache
 
 page = """<html><head><title>Shuga Sticker Pack</title>
 <style>
@@ -59,3 +68,7 @@ page = """<html><head><title>Shuga Sticker Pack</title>
 with open('index.html', 'w') as file:
     file.write(page)
     print("Generated gallery at ./index.html")
+
+with open('bd_api.json', 'w') as file:
+    file.write(json.dumps(stickList))
+    print("Generated BetterDiscord-compatible API at ./bd_api.json")
