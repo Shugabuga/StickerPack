@@ -15,7 +15,7 @@ for img in stickers:
     if "_3p" not in img:
         stickEl += f"<a title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
     stickCount += 1
-    stickList[parseCache.replace(".png", "")] = parseCache
+    stickList[img.replace(".png", "")] = parseCache
 
 page = """<html><head><title>Shuga Sticker Pack</title>
 <style>
