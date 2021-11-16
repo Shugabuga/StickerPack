@@ -81,10 +81,10 @@ page = """<html><head><title>Shuga Sticker Pack</title><meta charset="utf-8"/>
 let thirdParty = false;
 function toggletp() {
     for (let i = 0; i < document.querySelectorAll(".tp").length;i++) {
-        if (thirdParty) document.querySelectorAll(".tp")[i].style.display = "none";
-        else document.querySelectorAll(".tp")[i].style.display = "inline";
-        thirdParty = thirdParty ? false : true;
+        if (thirdParty) document.querySelectorAll(".tp")[i].style.display = "none"
+        else document.querySelectorAll(".tp")[i].style.display = "inline"
     }
+    thirdParty = thirdParty ? false : true;
 }</script></head><body>
 <h1><a class="title" href="//buy.dyn.dev/stickerpack">Shuga Sticker Pack</a> API</h1>
 <p>Contact <code>stickerpack [at] shuga [dot] co</code> for non-personal usage inquiries or higher-quality assets (or vectors).</p>
