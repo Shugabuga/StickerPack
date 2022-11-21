@@ -22,7 +22,8 @@ except:
 mkdir("safe_names")
 
 for img in stickers:
-    parseCache = parse.quote(img).replace("-", "_")
+    parseCache = parse.quote(img)
+    safeCache = parseCache.replace("-", "_")
     if "_tp" not in img:
         stickEl += f"<a title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
     else:
@@ -30,8 +31,8 @@ for img in stickers:
     stickCount += 1
     stickList[img.replace(".png", "")] = parseCache
 
-    shutil.copyfile(img, f"safe_names/{parseCache}")
-    zipCommand += f' "{parseCache}"'
+    shutil.copyfile(img, f"safe_names/{safeCache}")
+    zipCommand += f' "{safeCache}"'
 
 # Create ZIP file with all PNGs
 system("rm ssp.zip && cd safe_names && " + zipCommand)
@@ -121,6 +122,7 @@ function toggletp() {
 }</script></head><body>
 <h1><a class="title" href="//buy.dyn.dev/stickerpack">Shuga Sticker Pack</a> API</h1>
 <p>Contact <code>stickerpack [at] shuga [dot] co</code> for non-personal usage inquiries or higher-quality assets (or vectors).</p>
+<p>Add to Pleroma: <code>mix pleroma.emoji get-packs ssp -m https://sticker.shuga.co/manifest.json</code></p>
 <button onclick="toggletp()">Toggle Third Party Stickers</button>
 <div class="stickers">""" + stickEl + "</div><div class=\"c\">© Shuga and Respective Owners</div></body></html>"
 
