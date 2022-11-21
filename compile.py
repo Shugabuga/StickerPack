@@ -1,8 +1,10 @@
 print("SSP Homepage Compiler")
 
-from os import listdir
+from os import listdir, system, mkdir
 from os.path import isfile, join
+import shutil
 import json
+import hashlib
 from urllib import parse
 
 stickers = [f for f in listdir(".") if ".png" in f]
@@ -10,14 +12,45 @@ stickers = [f for f in listdir(".") if ".png" in f]
 stickEl = ""
 stickList = {}
 stickCount = 0
+zipCommand = "zip ../ssp.zip"
+
+try:
+    shutil.rmtree("safe_names")
+except:
+    pass
+
+mkdir("safe_names")
+
 for img in stickers:
-    parseCache = parse.quote(img)
+    parseCache = parse.quote(img).replace("-", "_")
     if "_tp" not in img:
         stickEl += f"<a title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
     else:
         stickEl += f"<a class=\"tp\" title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
     stickCount += 1
     stickList[img.replace(".png", "")] = parseCache
+
+    shutil.copyfile(img, f"safe_names/{parseCache}")
+    zipCommand += f' "{parseCache}"'
+
+# Create ZIP file with all PNGs
+system("rm ssp.zip && cd safe_names && " + zipCommand)
+print("Generated ZIP file at ./ssp.zip")
+
+ssp_pleroma = {
+    "ssp": {
+        "description": "Shuga Sticker Pack",
+        "files": "bd_api.json",
+        "homepage": "https://sticker.shuga.co",
+        "license": "Contact Shuga",
+        "name": "ssp",
+        "src": "https://sticker.shuga.co/ssp.zip"
+    }
+}
+
+with open("ssp.zip", "rb") as f:
+    data = f.read()
+    ssp_pleroma['ssp']['src_sha256'] = hashlib.sha256(data).hexdigest()
 
 page = """<html><head><title>Shuga Sticker Pack</title><meta charset="utf-8"/>
 <style>
@@ -98,3 +131,7 @@ with open('index.html', 'w') as file:
 with open('bd_api.json', 'w') as file:
     file.write(json.dumps(stickList))
     print("Generated BetterDiscord-compatible API at ./bd_api.json")
+
+with open('manifest.json', 'w') as file:
+    file.write(json.dumps(ssp_pleroma))
+    print("Generated Pleroma-compatible API at ./manifest.json")
