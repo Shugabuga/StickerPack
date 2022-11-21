@@ -23,7 +23,7 @@ mkdir("safe_names")
 
 for img in stickers:
     parseCache = parse.quote(img)
-    safeCache = parseCache.replace("-", "_")
+    safeCache = parseCache.replace("-", "_").replace("%", "_")
     if "_tp" not in img:
         stickEl += f"<a title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
     else:
@@ -35,7 +35,7 @@ for img in stickers:
     zipCommand += f' "{safeCache}"'
 
 # Create ZIP file with all PNGs
-system("rm ssp.zip && cd safe_names && " + zipCommand)
+system("rm ssp.zip; cd safe_names && " + zipCommand)
 print("Generated ZIP file at ./ssp.zip")
 
 ssp_pleroma = {
