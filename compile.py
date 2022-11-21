@@ -29,7 +29,7 @@ for img in stickers:
     else:
         stickEl += f"<a class=\"tp\" title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
     stickCount += 1
-    stickList[img.replace(".png", "")] = parseCache
+    stickList[img.replace(".png", "")] = safeCache
 
     shutil.copyfile(img, f"safe_names/{safeCache}")
     zipCommand += f' "{safeCache}"'
