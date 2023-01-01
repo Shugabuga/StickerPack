@@ -8,6 +8,8 @@ import hashlib
 from urllib import parse
 
 stickers = [f for f in listdir(".") if ".png" in f]
+for entry in [f for f in listdir(".") if ".gif" in f]:
+    stickers.append(entry)
 
 stickEl = ""
 stickList = {}
@@ -29,7 +31,7 @@ for img in stickers:
     else:
         stickEl += f"<a class=\"tp\" title=\"{img}\" href=\"/{parseCache}\"><span>{img}</span><img src=\"{parseCache}\"></a>"
     stickCount += 1
-    stickList[img.replace(".png", "")] = safeCache
+    stickList[img.replace(".png", "").replace(".gif", "")] = safeCache
 
     shutil.copyfile(img, f"safe_names/{safeCache}")
     zipCommand += f' "{safeCache}"'
